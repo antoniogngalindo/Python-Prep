@@ -1,22 +1,29 @@
 import sys
-# Comprobación de seguridad, ejecutar sólo si se recibe 3 argumentos
-if len(sys.argv) == 2:
-    import datetime
-    import os
-    marca_de_tiempo = datetime.datetime.now()
-    marca_de_tiempo = int(datetime.datetime.timestamp(marca_de_tiempo))
+import os
+import datetime
 
-    #temperatura = sys.argv[1]
-    #humedad = sys.argv[2]
+def informaciones(temp, humedad, lluvia):
+    marcatiempo = datetime.datetime.now()
+    marcatiempo = int(datetime.datetime.timestamp(marcatiempo))
+    
+    datos = str(marcatiempo) + ',' + temp + ',' + humedad + ',' + lluvia + '\n'
+
+    with open('clase09_ej2.csv', 'a') as archivo_csv:
+        archivo_csv.write(datos)
+
+def main():
+    if len(sys.argv) != 2:
+        
+        print('Se esperan 3 parámetros.')
+        print('True (si) o False (no) para si llovio')
+        return
+
+    
     lluvia = sys.argv[1]
-    temperatura = input('Ingrese la temperatura en grados centígrados')
-    humedad = input('Ingrese el porcentaje de humedad')
-    linea = str(marca_de_tiempo) + ',' + temperatura + ',' + humedad + ',' + lluvia
+    temp = input ('temperatura en celsius?')
+    humedad = input ('porcentaje de humedad?')
 
-    logs_lluvia = open('clase09_ej2.csv', 'a')
-    logs_lluvia.write(linea+'\n')
-    logs_lluvia.close()
+    informaciones(temp, humedad, lluvia)
 
-else:
-    print("ERROR: Introdujo una cantidad de argumentos distinta de tres (3)")
-    print('Ejemplo: clase09_ej1.py <temperatura> <humedad> <True o False>')
+if __name__ == "__main__":
+    main()

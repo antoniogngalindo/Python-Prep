@@ -1,16 +1,23 @@
 class Funciones:
     def __init__(self, lista):
+        if not isinstance (lista, list): #condicion sobre no ser una lista
+            self.lista =[] 
+            raise TypeError ('se espera una lista') #mostrar error 
+        
         self.lista=lista
     
     
     def es_primo(self):
         numeros = set(self.lista)
+        primos = []
         for num in numeros:
             if (self.__primo(num)):
+                primos.append(True)
                 print('primo:', num)
             else:
-                
+                primos.append(False)
                 print('no primo:', num)
+        return primos
         
     def __primo (self, num):
         if num > 0:
@@ -38,15 +45,22 @@ class Funciones:
         
         return moda, veces
     
-    def conversion(self):
+    def conversion(self, medida1, medida2):
         medidas = ['°C', '°F', '°K']
-        numeros = set(self.lista)
-        for valor in numeros:
-            for medida1 in medidas:
-                for medida2 in medidas:
-                    print ('conversion', medida1, "para", medida2)
-                    self.__conversion(valor, medida1, medida2)
-                    print()
+        conv = []
+        if str(medida1) not in medidas: #condicion de las medidas no seren strings
+            print('la medida 1 debe ser:', medidas)
+            
+        if str(medida2) not in medidas:
+            print ('la medida 2 debe ser:', medidas)
+            
+        else:
+            numeros = set(self.lista)
+            for valor in numeros:
+                print ('conversion', medida1, "para", medida2)
+                conv.append(self.__conversion(valor, medida1, medida2))
+                print()
+        return conv
 
     def __conversion(self, valor, medida1, medida2):
         if medida1 == '°C' and medida2 == '°F':
@@ -79,9 +93,12 @@ class Funciones:
     
     def factorial(self):
         numeros = set(self.lista)
+        factoriales= []
         for i in numeros:
+            factoriales.append(self.__factorial(i))
             print ('factorial de ', i, 'es', self.__factorial(i))
-
+        return factoriales
+    
     def __factorial(self, num):        
         
         if not isinstance(num, int):
